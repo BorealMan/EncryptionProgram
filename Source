@@ -1,0 +1,169 @@
+//Ryan Kehrli
+//Final Project: 
+//Using Substitution & Cesar Cipher to Encrypt and Decrypt Text
+
+//Libraries
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+//Custom Classes
+#include "Cesar.h"
+#include "Sub.h"
+//Main Function
+int main()
+{
+	//Local Vars
+	bool run = true;
+	int menu = 0;
+	string pt = "";
+
+	cout << "HOW TO USE:" << endl;
+	cout << "You may only use lowcase letters." << "\n\n";
+
+	//Main Program
+	while (run == true)
+	{	
+		//MAIN MENU
+		cout << "Options: " << endl << "1. Encrypt" << endl << "2. Decrypt" << endl << "0. Quit" << endl << "Enter: ";
+			
+		cin >> menu;
+		cout << endl;
+
+		//SUB MENU'S:
+
+		//Encrption Block
+		if (menu == 1)
+		{
+			int submenu = 0;
+			cout << "1. Cesar Encrption\n" << "2. Substitution Encrption\n" << "0. Quit\n" << "Enter: ";
+			cin >> submenu; cout << endl;
+			//Does Cesar
+			if (submenu == 1)
+			{	
+				string message = "";
+				int shift = 0;
+
+				cout << "Enter the message:";
+				cin.ignore(); //Have to clear the buffer... Weird issue but this is a fix. 
+				getline(cin, message);
+				cout << endl;
+				
+				cout << "Enter the shift(1-25): ";
+				cin >> shift; 
+				cout << endl;
+
+				if (shift >= 1 && shift < 26)
+				{	
+					cesar user(message, shift);
+					cout << user.encrypt(message, shift) << "\n\n";
+				}
+
+			}//End
+
+			//Does Sub
+			if (submenu == 2)
+			{
+				string message = "";
+
+				cout << "Enter the message:";
+				cin.ignore(); //Have to clear the buffer... 
+				getline(cin, message);
+				cout << endl;
+
+				substiution user(message);
+				cout << user.subEncrypt(message) << "\n\n";
+
+			}//End
+
+
+		}//End E Block
+
+		//Decrption Block	
+		if (menu == 2)
+		{
+			int submenu = 0;
+			cout << "1. Cesar Decrption\n" << "2. Substitution Decrption\n" << "3. Mass Decrption\n" << "0. Quit\n" << "Enter: ";
+			cin >> submenu; cout << endl;
+			//Does Cesar
+			if (submenu == 1)
+			{
+				string message = "";
+				int shift = 0;
+
+				cout << "Enter the message:";
+				cin.ignore(); //Have to clear the buffer...
+				getline(cin, message);
+				cout << endl;
+
+				cout << "Enter the shift(1-25): ";
+				cin >> shift;
+				cout << endl;
+
+				if (shift > 1 && shift < 26)
+				{
+					cesar user(message, shift);
+					cout << user.decrypt(message, shift) << "\n\n";
+				}
+
+			}//End
+
+			//Does Subtitution
+			if (submenu == 2)
+			{
+				string message = "";
+
+				cout << "Enter the message:";
+				cin.ignore(); //Have to clear the buffer...
+				getline(cin, message);
+				cout << endl;
+
+				substiution user(message);
+				cout << user.subDecrypt(message) << "\n\n";
+
+			}//End
+
+			//Does all combinations
+			if (submenu == 3)
+			{
+				string message = "";
+
+				cout << "Enter the message:";
+				cin.ignore(); //Have to clear the buffer...
+				getline(cin, message);
+				cout << endl;
+
+				cesar user(message, 1);
+				substiution user1(message);
+
+				for (unsigned int shift = 1; shift <= 25; shift++)
+				{
+					cout << "Shift" << shift << ": " << user.decrypt(message, shift) << "\n";
+				}
+
+				cout << "Substitution: " << user1.subDecrypt(message) << "\n";
+
+				cout << "\n\n";
+			}//End
+
+			//Back to Main Menu
+			if (submenu == 0)
+			{
+				continue;
+			}//End
+
+
+
+		}//End D Block
+
+		//QUIT PROGRAM
+		if (menu == 0)
+		{
+			run = false;
+		}
+
+	}
+
+	system("pause");
+}
