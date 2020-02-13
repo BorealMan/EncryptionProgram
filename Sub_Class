@@ -1,0 +1,104 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+string texty = "abcdefghijklmnopqrstuvwxyz ";
+string key =   " zyxwvutsrqponmlkjihgfedcba";
+
+
+class substiution
+{
+	public:
+		//Constructor
+	substiution(string message)
+	{
+		messageIn(message);
+	}
+		
+	void messageIn(string message)
+	{
+		message = message;
+	}
+
+	string subEncrypt(string message)
+	{
+		vector <int> Ptext{};
+		vector <int> Ctext{};
+
+		for (unsigned int i = 0; i <= message.length(); i++)
+		{
+			bool is_true = false;
+			for (unsigned int j = 0; j <= texty.length(); j++)
+			{	
+				//numeric char value
+				if (texty[j] == message[i])
+				{
+					Ptext.push_back(j);
+					is_true = true;
+				}
+			}
+
+			if (is_true == false)
+			{
+				return "Invalid Input";
+			}
+
+		}
+
+		string ct = "";
+		for (unsigned int i = 0; i < message.length(); i++)
+		{
+			char c;
+			c = key[Ptext[i]];
+			ct += c;
+
+		}
+
+		return ct;
+
+	}//End
+
+	string subDecrypt(string message)
+	{
+		vector <int> Ptext{};
+		vector <int> Ctext{};
+
+	
+		for (unsigned int i = 0; i <= message.length(); i++)
+		{	
+			bool is_true = false;
+			for (unsigned int j = 0; j <= key.length(); j++)
+			{
+				//numeric char value
+				if (key[j] == message[i])
+				{
+					Ctext.push_back(j);
+					is_true = true;
+				}
+			}
+
+			if (is_true == false)
+			{
+				return "Invalid Input";
+			}
+
+		}
+
+		string pt = "";
+		for (unsigned int i = 0; i < Ctext.size(); i++)
+		{
+			char c;
+			c = texty[Ctext[i]];
+			pt += c;
+
+		}
+		return pt;
+	}
+
+
+	private:
+	string message;
+		
+};
