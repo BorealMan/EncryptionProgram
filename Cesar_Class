@@ -1,0 +1,146 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+
+string text = "abcdefghijklmnopqrstuvwxyz ";
+
+class cesar
+{
+public:
+	//Constructor
+	cesar(string message, int shift)
+	{
+		messageIn(message);
+		shiftIn(shift);
+	}
+
+	//Input Functions
+	void messageIn(string message)
+	{
+		message = message;
+	}
+
+	void shiftIn(int shift)
+	{
+		shift = shift;
+	}
+
+	//Encrption Block
+	string encrypt(string message, int shift)
+	{	
+		
+		vector <int> Ptext{};
+		vector <int> Ctext{};
+
+
+		//Check each char in message and then compares it to each letter in text 
+		for (unsigned int j = 0; j <= message.length(); j++)
+		{
+
+			bool is_true = false;
+			for (unsigned int i = 0; i <= text.length(); i++)
+			{	
+				//Finding and adding the numeric char values to the Plain Text Array
+				if (message[j] == text[i])
+				{	
+					is_true = true;
+					Ptext.push_back(i);
+				}
+
+		
+			}//End Inner Loop 1
+			//Input Validation
+			if (is_true == false)
+			{
+				return "Invalid Input";
+			}
+
+		}//End Loop
+
+		//Creating the Cypher Text Array
+		for (unsigned int i = 0; i <= message.length(); i++)
+		{
+			Ctext.push_back((Ptext[i] + shift) % 27);
+
+		}
+		
+		Ptext.pop_back();
+		//Displaying the Cypher Message
+		string ct = "";
+		for (unsigned int i = 0; i < Ptext.size(); i++)
+		{	
+			char c;
+			c = text[Ctext[i]];
+			ct += c;
+
+		}
+		
+		return ct;
+	}//End Encrpt
+
+
+	//Decryption Block
+	string decrypt(string message, unsigned int shift)
+	{
+		vector <int> Ptext{};
+		vector <int> Ctext{};
+
+		for (unsigned int j = 0; j <= message.size(); j++)
+		{	
+			bool is_true = false;
+			for (unsigned int i = 0; i <= text.size(); i++)
+			{
+				//Finding and adding the numeric char values to the Plain Text Array
+				if (message[j] == text[i])
+				{
+					Ctext.push_back(i);
+					is_true = true;
+				}
+
+			
+			}//End Inner Loop 1
+
+			if (is_true == false)
+			{
+				return "Invalid Input";
+			}
+		}//End Loop
+
+		//Creating the Plain Text Vector
+		for (unsigned int i = 0; i <= message.length(); i++)
+		{	
+			int h = Ctext[i] - shift;
+
+			if (h < 0)
+			{	
+				h = (27 + Ctext[i] - shift);
+			}
+
+			Ptext.push_back((h) % 28);
+
+		}
+
+		//Displaying the Plain Text
+		string pt = "";
+		Ctext.pop_back();
+		for (unsigned int i = 0; i < Ctext.size(); i++)
+		{
+			char c;
+			c = text[Ptext[i]];
+			pt += c;
+
+		}
+
+		return pt;
+	}//End Decrypt
+
+
+	private:
+		string message;
+		int shift;
+		
+
+};
